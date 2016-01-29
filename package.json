@@ -1,7 +1,7 @@
 {
-  "name": "gg-log",
-  "version": "1.0.6",
-  "description": "View your git commits across multiple directories in a beautiful console format.",
+  "name": "ensure-sync",
+  "version": "0.0.1",
+  "description": "CLI utility which helps you ensure whether two directories over an SSH network are synced. This is especially useful for services like Dropbox, which often lie to you about true sync status.",
   "main": "index.js",
   "bin": "index.js",
   "scripts": {
@@ -12,19 +12,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/georgewsinger/global-git-log.git"
+    "url": "git+https://github.com/georgewsinger/ensure-sync.git"
   },
   "keywords": [
-    "git",
-    "commit",
+    "sync",
+    "SSH",
+    "hash",
+    "Dropbox",
+    "CLI",
+    "utility",
+    "ensure",
     "console",
     "terminal",
-    "shell",
-    "CLI",
-    "log",
-    "logger"
+    "shell"
   ],
   "author": "George Singer",
   "license": "MIT",
-  "homepage": "https://github.com/georgewsinger/global-git-log#readme"
+  "homepage": "https://github.com/georgewsinger/ensure-sync#readme"
 }
