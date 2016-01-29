@@ -1,0 +1,30 @@
+{
+  "name": "gg-log",
+  "version": "1.0.6",
+  "description": "View your git commits across multiple directories in a beautiful console format.",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "minimist": "1.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/georgewsinger/global-git-log.git"
+  },
+  "keywords": [
+    "git",
+    "commit",
+    "console",
+    "terminal",
+    "shell",
+    "CLI",
+    "log",
+    "logger"
+  ],
+  "author": "George Singer",
+  "license": "MIT",
+  "homepage": "https://github.com/georgewsinger/global-git-log#readme"
+}
