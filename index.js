@@ -7,36 +7,46 @@ var argv = min(process.argv.slice(2));
 //var one = argv["_"][0] ? argv["_"][0] : "1.day";
 //var two = argv["_"][1] ? argv["_"][1] : "~";
 
-//function puts(error, stdout, stderr) { console.log(stdout) };
-//exec("./gg-log.sh " + one + " " + two, puts);
 
 var prompt = require('prompt');
-//prompt.message = "prompt (default value)";
-//prompt.delimiter = "";
+prompt.message = "";
+prompt.delimiter = "";
 
 
 var schema = {
   properties: {
-    ssh1: {
-		  description: 'ssh1 description',
-      message: 'ssh1 message',
-      default: 'george@192.168.1.2'
+    targetSSH: {
+      description: '    ssh (i.e., user@192.168.1.2):'
+      //message: 'ssh1 message',
+      //default: 'george@192.168.1.2'
     },
-    port1: {
-		  description: 'Port1 description',
-      message: 'Port1 message',
-      default: '58002'
+    targetPort: {
+      description: '    port (i.e., 22):'
+      //message: 'Port1 message',
+      //default: '58002'
+    },
+    targetDir: {
+      description: '    target directory (i.e., ~/Dropbox):'
+      //message: 'Port1 message',
+      //default: '58002'
     }
   }
 };
 
+console.log("Please enter the SSH address of your target computer.");
 prompt.start();
 
 prompt.get(schema, function (err, result) {
   if (err) { return onErr(err); }
-  console.log('Command-line input received:');
-  console.log('  ssh1: ' + result.ssh1);
-  console.log('  port1: ' + result.port1);
+  /*
+  console.log('  ssh: ' + result.targetSSH);
+  console.log('  port: ' + result.targetPort);
+  console.log('  port: ' + result.targetDir);
+  */
+  console.log('Ensuring ' + result.targetDir + ' is synced at ' + result.targetSSH + ":" + result.targetPort);
+
+  //function puts(error, stdout, stderr) { console.log(stdout) };
+  //exec("./ensure-sync.sh " + result.targetDir + " " + result.targetSSH + " " + result.targetPort, puts);
 });
 
 function onErr(err) {
