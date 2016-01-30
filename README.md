@@ -10,9 +10,9 @@ For example, services like Dropbox purport to keep folders in sync, but sometime
 
 # Instructions
 
-First, launch the program:
+First, launch the program (you *must* launch this in sudo for this script to work):
 
-    $ ensure-sync
+    $ sudo ensure-sync
 
 Next, you will be prompted to enter 4 pieces of information: (i) your target SSH address (e.g., user@192.168.1.1), (ii) your target SSH port (e.g., 22), (iii) your source folder (e.g., a folder on your local machine), and (iv) your target folder (e.g., a folder on the SSH machine). Note that for (iii) and (iv) you **must** use full paths (unfortunately, this program can't handle environment variables or `~`).
 
