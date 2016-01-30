@@ -2,7 +2,7 @@
 
 var min = require('minimist');
 var argv = min(process.argv.slice(2));
-//var exec = require('child_process').exec;
+var exec = require('child_process');
 
 //var one = argv["_"][0] ? argv["_"][0] : "1.day";
 //var two = argv["_"][1] ? argv["_"][1] : "~";
@@ -25,6 +25,11 @@ var schema = {
       //message: 'Port1 message',
       //default: '58002'
     },
+    sourceDir: {
+      description: '    source directory (i.e., ~/Dropbox):'
+      //message: 'Port1 message',
+      //default: '58002'
+    },
     targetDir: {
       description: '    target directory (i.e., ~/Dropbox):'
       //message: 'Port1 message',
@@ -43,10 +48,12 @@ prompt.get(schema, function (err, result) {
   console.log('  port: ' + result.targetPort);
   console.log('  port: ' + result.targetDir);
   */
-  console.log('Ensuring ' + result.targetDir + ' is synced at ' + result.targetSSH + ":" + result.targetPort);
+  //console.log('Ensuring ' + result.targetDir + ' is synced at ' + result.targetSSH + ":" + result.targetPort);
 
-  //function puts(error, stdout, stderr) { console.log(stdout) };
-  //exec("./ensure-sync.sh " + result.targetDir + " " + result.targetSSH + " " + result.targetPort, puts);
+  function puts(error, stdout, stderr) { console.log(stdout) };
+  //console.log("./ensure-sync.sh " + " local " + result.sourceDir + " " + "ssh -p " + result.targetPort + " " + result.targetSSH + " " + result.targetDir);
+  //exec("./ensure-sync.sh " + " local " + result.sourceDir + " " + "ssh -p " + result.targetPort + " " + result.targetSSH + " " + result.targetDir, puts);
+  exec.execFile("./ensure-sync.sh", ["local", result.sourceDir, "ssh -p " + result.targetPort + " " + result.targetSSH, result.targetDir], puts);
 });
 
 function onErr(err) {

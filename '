@@ -1,0 +1,49 @@
+#! /bin/bash
+
+SSH1="ssh -p 58002 george@192.168.1.2"
+SSH2="ssh -p 58005 george@192.168.1.5"
+
+# ls -1a -d -1 $PWD/{*,.*}
+ssh -p 58002 george@192.168.1.2 "ls -1a -d -1 $DROPBOX/{*,.*} > $DROPBOX/hash/ArchBox_dirs"
+ssh -p 58005 george@192.168.1.5 "ls -1a -d -1 $DROPBOX/{*,.*} > $DROPBOX/hash/george_dirs"
+
+# Correct for strange non-sorting behavior in SSH
+cat $DROPBOX/hash/ArchBox_dirs | sort -o $DROPBOX/hash/ArchBox_dirs
+cat $DROPBOX/hash/george_dirs | sort -o $DROPBOX/hash/george_dirs
+
+# Delete first two lines of each file (noise)
+sed -i -e 1,2d $DROPBOX/hash/ArchBox_dirs
+sed -i -e 1,2d $DROPBOX/hash/george_dirs
+
+function check_input_dir_file_for_hash_consistencies() {
+
+	while read line
+	do
+		hashArchBox="$(ssh -p 58002 george@192.168.1.2 "find $line -type f -print0 | sort -z | xargs -0 sha1sum | sha1sum" < /dev/null)"
+		hashArchPad="$(ssh -p 58005 george@192.168.1.5 "find $line -type f -print0 | sort -z | xargs -0 sha1sum | sha1sum" < /dev/null)"
+
+		echo "$hashArchBox"
+		echo "$hashArchPad"
+		
+		if [ "$hashArchBox" == "$hashArchPad" ]
+		then
+			echo "$line is synced"
+			continue # safeguard against my own stupidity
+		else
+			echo "$line is not synced" # safeguard against my own stupidity
+			# break
+		fi
+	done
+
+}
+
+DIFF=$(diff "$DROPBOX/hash/ArchBox_dirs" "$DROPBOX/hash/george_dirs")
+
+if [ "$DIFF" == "" ] 
+then
+	cat $DROPBOX/hash/ArchBox_dirs | check_input_dir_file_for_hash_consistencies
+else
+	echo "ArchBox_dirs differs from george_dirs."
+	cat $DROPBOX/hash/ArchBox_dirs | check_input_dir_file_for_hash_consistencies
+	echo "ArchBox_dirs differs from george_dirs."
+fi
