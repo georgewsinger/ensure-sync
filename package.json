@@ -1,7 +1,7 @@
 {
   "name": "ensure-sync",
   "version": "0.0.1",
-  "description": "CLI utility which helps you ensure whether two directories over an SSH network are synced. This is especially useful for services like Dropbox, which often lie to you about true sync status.",
+  "description": "CLI utility which helps you ensure whether two directories over an SSH network are synced. This is especially useful for services like Dropbox, which often lie to you about true sync status :)",
   "main": "index.js",
   "bin": "index.js",
   "scripts": {

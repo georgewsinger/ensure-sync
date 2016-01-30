@@ -26,12 +26,12 @@ var schema = {
       //default: '58002'
     },
     sourceDir: {
-      description: '    source directory (i.e., ~/Dropbox):'
+      description: '    source directory (use full path i.e., /home/user/Dropbox):'
       //message: 'Port1 message',
       //default: '58002'
     },
     targetDir: {
-      description: '    target directory (i.e., ~/Dropbox):'
+      description: '    target directory (use full path i.e., /home/user/Dropbox):'
       //message: 'Port1 message',
       //default: '58002'
     }
@@ -50,10 +50,13 @@ prompt.get(schema, function (err, result) {
   */
   //console.log('Ensuring ' + result.targetDir + ' is synced at ' + result.targetSSH + ":" + result.targetPort);
 
-  function puts(error, stdout, stderr) { console.log(stdout) };
+  console.log("Computing differences between folders (this may take several seconds)..");
+
+  function puts(error, stdout, stderr) { console.log(stdout); };
   //console.log("./ensure-sync.sh " + " local " + result.sourceDir + " " + "ssh -p " + result.targetPort + " " + result.targetSSH + " " + result.targetDir);
   //exec("./ensure-sync.sh " + " local " + result.sourceDir + " " + "ssh -p " + result.targetPort + " " + result.targetSSH + " " + result.targetDir, puts);
   exec.execFile("./ensure-sync.sh", ["local", result.sourceDir, "ssh -p " + result.targetPort + " " + result.targetSSH, result.targetDir], puts);
+  //exec.spawn("./ensure-sync.sh", ["local", result.sourceDir, "ssh -p " + result.targetPort + " " + result.targetSSH, result.targetDir]);
 });
 
 function onErr(err) {

@@ -1,9 +1,16 @@
 #! /bin/bash
 
+> "./not-synced"
+
 SSH1=$1
 DIR1=$2
 SSH2=$3
 DIR2=$4
+#
+#echo "SSH1: " $1
+#echo "DIR1: " $2
+#echo "SSH2: " $3
+#echo "DIR2: " $4
 
 ##SSH1=""
 #SSH1="ssh -p 58002 george@192.168.1.2"
@@ -16,7 +23,7 @@ DIR2=$4
 LS1="./ls1"
 LS2="./ls2"
 
-echo "Gathering list of files to compare (this may take a few seconds)."
+#echo "Gathering list of files to compare (this may take a few seconds)."
 
 # ls -1a -d -1 $PWD/{*,.*}
 ###"$SSH1" "ls -1a -d -1 $DROPBOX/{*,.*} > $DROPBOX/hash/ArchBox_dirs"
@@ -24,12 +31,14 @@ echo "Gathering list of files to compare (this may take a few seconds)."
 #$SSH1 "ls -1a -d -1 $DIR1/{*,.*}" > $LS1
 #$SSH2 "ls -1a -d -1 $DIR2/{*,.*}" > $LS2
 if [ "$SSH1" = "local" ]; then
-  ls -1a -d -1 $DIR1/{*,.*} > $LS1
+  #ls -1a -d -1 $DIR1/{*,.*} > $LS1
+  ls -1a -d -1 $(realpath $DIR1)/{*,.*} > $LS1
 else
-  $SSH1 "ls -1a -d -1 $DIR1/{*,.*}" > $LS1
+  $SSH1 "ls -1a -d -1 $(realpath $DIR1)/{*,.*}" > $LS1
 fi
 
 if [ "$SSH2" = "local" ]; then
+  #ls -1a -d -1 $DIR2/{*,.*} > $LS1
   ls -1a -d -1 $DIR2/{*,.*} > $LS1
 else
   $SSH2 "ls -1a -d -1 $DIR2/{*,.*}" > $LS2
@@ -71,21 +80,11 @@ function check_input_dir_file_for_hash_consistencies() {
 			continue # safeguard against my own stupidity
 		else
 			echo "$line is not synced" # safeguard against my own stupidity
-      echo "$line" > "./not-synced"
+      echo "$line" >> "./not-synced"
 			# break
 		fi
 	done
 
 }
 
-DIFF=$(diff "$LS1" "$LS2")
-LS3=$(cat $LS1 $LS2 | sort | uniq)
-
-if [ "$DIFF" == "" ] 
-then
-	cat $LS3 | check_input_dir_file_for_hash_consistencies
-else
-	# echo "LS1 differs from LS2."
-	cat $LS3 | check_input_dir_file_for_hash_consistencies
-	#echo "LS1 differs from LS2."
-fi
+cat $LS1 | check_input_dir_file_for_hash_consistencies
