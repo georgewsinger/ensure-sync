@@ -35,7 +35,7 @@ prompt.get(schema, function (err, result) {
   console.log("Computing differences between folders (this may take several seconds)..");
 
   function puts(error, stdout, stderr) { console.log(stdout); };
-  exec.execFile("./ensure-sync.sh", ["local", result.sourceDir, "ssh -p " + result.targetPort + " " + result.targetSSH, result.targetDir], puts);
+  exec.execFile(__dirname + "/ensure-sync.sh", ["local", result.sourceDir, "ssh -p " + result.targetPort + " " + result.targetSSH, result.targetDir], puts);
 });
 
 function onErr(err) {
