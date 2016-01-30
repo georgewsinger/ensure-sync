@@ -16,7 +16,7 @@ First, launch the program (you *must* launch this in sudo for this script to wor
 
 Next, you will be prompted to enter 4 pieces of information: (i) your target SSH address (e.g., user@192.168.1.1), (ii) your target SSH port (e.g., 22), (iii) your source folder (e.g., a folder on your local machine), and (iv) your target folder (e.g., a folder on the SSH machine). Note that for (iii) and (iv) you **must** use full paths (unfortunately, this program can't handle environment variables or `~`).
 
-After inputing this information, sit back and wait while hash values are computed for each folder and file (depending upon how large your folders are, this can end up taking several seconds).
+After inputing this information, sit back and wait while hash values are computed for each folder and file (depending upon how large your folders are, this can end up taking several seconds). **NOTE:** It's best if you are set up to SSH via key authentication (otherwise, you will be repeatedly asked to enter your password as the script traverses through each file and subdirectory).
 
 # Interpreting the Output
 
