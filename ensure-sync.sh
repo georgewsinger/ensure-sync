@@ -5,6 +5,7 @@ DIR1=$2
 SSH2=$3
 DIR2=$4
 
+> "./not-synced"
 > "./ls1"
 > "./ls2"
 > "./ls3"
@@ -66,7 +67,7 @@ function check_input_dir_file_for_hash_consistencies() {
 			continue
 		else
 			echo "$line is not synced" # safeguard against my own stupidity
-      echo "$line" >> "./not-synced"
+			echo "$line" >> "./not-synced" # safeguard against my own stupidity
 		fi
 	done
 
